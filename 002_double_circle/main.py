@@ -63,7 +63,7 @@ small_ball = Ball(small_circle_x, small_circle_y, 1)
 while True:
     # 处理退出事件
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT or small_ball.radius >= big_ball.radius:
             pygame.quit()
             sys.exit()
 
@@ -79,6 +79,8 @@ while True:
         while not small_ball.inside(big_ball):
             small_ball.x += x_speed
             small_ball.y += y_speed
+            if small_ball.radius >= big_ball.radius:
+                break
 
     big_circle = pygame.draw.circle(screen, (255, 255, 255), (big_ball.x, big_ball.y),
                                     big_ball.radius)  # 大圆始终保持不变，所以不需要重新绘制大圆部分，只需要绘制小圆部分即可。
