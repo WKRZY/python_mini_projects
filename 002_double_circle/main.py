@@ -45,10 +45,12 @@ class Ball:
         self.radius = radius
         self.speed = 0.1
         self.shape_obj = Point(self.x, self.y).buffer(self.radius)
+        self.dx = 0.5
+        self.dy = 0.1
 
-    def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
+    def move(self):
+        self.x += self.dx
+        self.y += self.dy
 
     def cross(self, other):
         return are_two_circles_intersecting([self.x, self.y], self.radius, [other.x, other.y], other.radius)
@@ -68,17 +70,17 @@ while True:
             sys.exit()
 
     if small_ball.inside(big_ball):
-        small_ball.x += x_speed
-        small_ball.y += y_speed
+        small_ball.move()
     else:
         small_ball.radius += 1  # 小圆的半径增大
         big_ball.radius -= 1  # 大圆的半径减小
-        x_speed *= -1.0
-        y_speed *= -1.0
+        small_ball.dx *= -1.0
+        small_ball.dy *= -1.0
+        # x_speed *= -1.0
+        # y_speed *= -1.0
         print(small_ball.radius, big_ball.radius)
         while not small_ball.inside(big_ball):
-            small_ball.x += x_speed
-            small_ball.y += y_speed
+            small_ball.move()
             if small_ball.radius >= big_ball.radius:
                 break
 
